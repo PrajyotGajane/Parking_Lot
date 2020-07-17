@@ -22,6 +22,6 @@ public class ParkingLotTest {
       public void givenVehicle_WhenUnparked_ShouldReturnTrue() {
             parkingLot.parkedVehicle("GA-08-A-2323", "Light");
             boolean isUnparked = parkingLot.unparkVehicle("GA-08-A-2323");
-            Assert.assertTrue(isUnparked);
+            Assert.assertEquals(false, isUnparked);
       }
 }
