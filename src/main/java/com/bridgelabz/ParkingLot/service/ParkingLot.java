@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class ParkingLot {
       HashMap<String, String> isVehicleParked = new HashMap<>();
-
+      private int sizeOfParkingLot;
       public boolean parkedVehicle(String vehicleNumber, String owner) throws ParkingLotException {
             if (isVehicleParked.containsKey(vehicleNumber))
                   throw new ParkingLotException("Already Parked", ParkingLotException.ExceptionType.ALREADY_PARKED);
@@ -20,5 +20,13 @@ public class ParkingLot {
                           ParkingLotException.ExceptionType.VEHICLE_NOT_PRESENT);
             isVehicleParked.remove(vehicleNumber);
             return isVehicleParked.containsKey(vehicleNumber);
+      }
+
+      public boolean ownerKnowFull() {
+            return false;
+      }
+
+      public void parkinLotSize(int size) {
+            this.sizeOfParkingLot = size;
       }
 }
