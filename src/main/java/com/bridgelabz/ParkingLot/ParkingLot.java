@@ -1,10 +1,12 @@
 package com.bridgelabz.ParkingLot;
 
-public class ParkingLot {
-      private Object vehicle;
+import java.util.HashMap;
 
-      public boolean parkedVehicle(Object vehicle) {
-            this.vehicle = vehicle;
-            return true;
+public class ParkingLot {
+      HashMap<String, String> isVehicleParked = new HashMap<>();
+
+      public boolean parkedVehicle(String vehicleNumber, String carType) {
+           isVehicleParked.put(vehicleNumber, carType);
+            return isVehicleParked.containsKey(vehicleNumber);
       }
 }
