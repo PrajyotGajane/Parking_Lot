@@ -20,8 +20,9 @@ public class ParkingLotTest {
             boolean isParked = parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
             Assert.assertTrue(isParked);
       }
+
       @Test
-      public void givvenVehicle_WhenAlreadyParked_ShouldThrowCustomException() {
+      public void givenVehicle_WhenAlreadyParked_ShouldThrowCustomException() {
             ParkingLot parkingLot = new ParkingLot();
             try {
                   parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
@@ -29,5 +30,22 @@ public class ParkingLotTest {
             } catch (ParkingLotException e) {
                   Assert.assertEquals(e.type, ParkingLotException.ExceptionType.ALREADY_PARKED);
             }
+      }
+
+      @Test
+      public void givenVehicle_WhenUnparked_ShouldReturnTrue() throws ParkingLotException {
+            parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
+            boolean isUnparked = parkingLot.unparkVehicle("GA-08-A-2323");
+            Assert.assertEquals(false, isUnparked);
+      }
+
+      @Test
+      public void givenVehicleToUnpark_WhenNotPresent_ShouldThrowCustomException() {
+            try {
+                  parkingLot.unparkVehicle("GA-08-A-2323");
+            } catch (ParkingLotException e) {
+                  Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_PRESENT);
+            }
+
       }
 }
