@@ -22,7 +22,9 @@ public class ParkingLot {
             return isVehicleParked.containsKey(vehicleNumber);
       }
 
-      public boolean ownerKnowFull() {
+      public boolean ownerKnowsIsFull() {
+            if (isVehicleParked.size() == sizeOfParkingLot)
+                  return true;
             return false;
       }
 

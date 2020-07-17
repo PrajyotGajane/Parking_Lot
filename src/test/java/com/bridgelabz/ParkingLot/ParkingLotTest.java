@@ -49,12 +49,12 @@ public class ParkingLotTest {
       }
 
       @Test
-      public void givenParkingLotWithSize_WhenFull_ShouldReturnTrue() throws ParkingLotException {
+      public void givenParkingLotWithSize_WhenFull_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {
             parkingLot.parkinLotSize(3);
             parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
             parkingLot.parkedVehicle("GA-08-A-3455", "Rahul");
             parkingLot.parkedVehicle("GA-08-A-4567", "Anubhav");
-            boolean owneerKnowLotIsFull = parkingLot.ownerKnowFull();
-            Assert.assertTrue(owneerKnowLotIsFull);
+            boolean owneerKnowsLotIsFull = parkingLot.ownerKnowsIsFull();
+            Assert.assertTrue(owneerKnowsLotIsFull);
       }
 }
