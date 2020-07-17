@@ -9,4 +9,8 @@ public class ParkingLot {
            isVehicleParked.put(vehicleNumber, carType);
             return isVehicleParked.containsKey(vehicleNumber);
       }
+
+      public boolean unparkVehicle(String vehicleNumber) {
+            return false;
+      }
 }
