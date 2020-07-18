@@ -49,12 +49,17 @@ public class ParkingLotTest {
       }
 
       @Test
-      public void givenParkingLotWithSize_WhenFull_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {
+      public void givenParkingLotWithSize_WhenFull_ShouldInformOwnerAndReturnTrue() {
             parkingLot.parkinLotSize(3);
-            parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
-            parkingLot.parkedVehicle("GA-08-A-3455", "Rahul");
-            parkingLot.parkedVehicle("GA-08-A-4567", "Anubhav");
-            boolean owneerKnowsLotIsFull = parkingLot.ownerKnowsIsFull();
-            Assert.assertTrue(owneerKnowsLotIsFull);
+            try {
+                  parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
+                  parkingLot.parkedVehicle("GA-08-A-3455", "Rahul");
+                  parkingLot.parkedVehicle("GA-08-A-4567", "Anubhav");
+                  parkingLot.parkedVehicle("GA-08-A-4557", "John");
+            } catch (ParkingLotException e) {
+                  System.out.println(e.getMessage());
+                  Assert.assertEquals(e.type, ParkingLotException.ExceptionType.PARKING_LOT_FULL);
+            }
+
       }
 }

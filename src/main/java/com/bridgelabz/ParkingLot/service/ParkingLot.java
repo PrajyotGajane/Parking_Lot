@@ -7,9 +7,12 @@ import java.util.HashMap;
 public class ParkingLot {
       HashMap<String, String> isVehicleParked = new HashMap<>();
       private int sizeOfParkingLot;
+
       public boolean parkedVehicle(String vehicleNumber, String owner) throws ParkingLotException {
             if (isVehicleParked.containsKey(vehicleNumber))
                   throw new ParkingLotException("Already Parked", ParkingLotException.ExceptionType.ALREADY_PARKED);
+            if (ownerKnowsIsFull())
+                  throw new ParkingLotException("Parking Lot Full", ParkingLotException.ExceptionType.PARKING_LOT_FULL);
             isVehicleParked.put(vehicleNumber, owner);
             return isVehicleParked.containsKey(vehicleNumber);
       }
@@ -23,8 +26,10 @@ public class ParkingLot {
       }
 
       public boolean ownerKnowsIsFull() {
-            if (isVehicleParked.size() == sizeOfParkingLot)
+            if (isVehicleParked.size() == sizeOfParkingLot) {
+
                   return true;
+            }
             return false;
       }
 
