@@ -69,6 +69,7 @@ public class ParkingLotTest {
             parkingLot.parkedVehicle("MH-08-A-3455");
             parkingLot.parkedVehicle("GJ-08-A-4567");
             boolean informedOwner = parkingLot.owner.isParkingLotFUll();
+
             Assert.assertTrue(informedOwner);
       }
 
