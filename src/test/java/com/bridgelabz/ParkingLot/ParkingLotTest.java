@@ -82,4 +82,15 @@ public class ParkingLotTest {
             boolean informedAirportSecuirty = parkingLot.airportSecurity.isParkingLotFUll();
             Assert.assertTrue(informedAirportSecuirty);
       }
+
+      @Test
+      public void givenParkingLotWithSize_WhenSpaceAvailableInformOwner_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {
+            parkingLot.parkinLotSize(2);
+            parkingLot.parkedVehicle("GA-08-A-2323");
+            parkingLot.parkedVehicle("GJ-08-A-4567");
+            parkingLot.unparkVehicle("GJ-08-A-4567");
+            boolean informedOwner = parkingLot.owner.isParkingLotFUll();
+            Assert.assertFalse(informedOwner);
+      }
+
 }

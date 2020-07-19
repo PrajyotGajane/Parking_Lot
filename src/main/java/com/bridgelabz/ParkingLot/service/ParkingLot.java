@@ -30,6 +30,7 @@ public class ParkingLot {
                   throw new ParkingLotException("Vehicle not present in lot",
                           ParkingLotException.ExceptionType.VEHICLE_NOT_PRESENT);
             isVehicleParked.remove(vehicleNumber);
+            owner.parkingLotFull(false);
             return isVehicleParked.contains(vehicleNumber);
       }
 
