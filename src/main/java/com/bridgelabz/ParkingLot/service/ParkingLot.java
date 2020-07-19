@@ -14,6 +14,8 @@ public class ParkingLot {
       }
 
       public void parkedVehicle(String vehicleNumber) throws ParkingLotException {
+            if (vehicleNumber == null)
+                  throw new ParkingLotException("Invalid Vehicle", ParkingLotException.ExceptionType.INVALID_VEHICLE);
             if (isVehicleParked.contains(vehicleNumber))
                   throw new ParkingLotException("Already Parked", ParkingLotException.ExceptionType.ALREADY_PARKED);
             if (isVehicleParked.size() == sizeOfParkingLot)
@@ -25,13 +27,12 @@ public class ParkingLot {
             }
       }
 
-      public boolean unparkVehicle(String vehicleNumber) throws ParkingLotException {
+      public void unparkVehicle(String vehicleNumber) throws ParkingLotException {
             if (!isVehicleParked.contains(vehicleNumber))
                   throw new ParkingLotException("Vehicle not present in lot",
                           ParkingLotException.ExceptionType.VEHICLE_NOT_PRESENT);
             isVehicleParked.remove(vehicleNumber);
             owner.parkingLotFull(false);
-            return isVehicleParked.contains(vehicleNumber);
       }
 
       public void parkinLotSize(int size) {

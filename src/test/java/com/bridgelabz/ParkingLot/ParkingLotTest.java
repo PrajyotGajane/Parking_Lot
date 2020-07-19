@@ -23,6 +23,15 @@ public class ParkingLotTest {
       }
 
       @Test
+      public void givenVehicleNull_WhenParked_ShouldReturnTrue() {
+            try {
+                  parkingLot.parkedVehicle(null);
+            } catch (ParkingLotException e) {
+                  Assert.assertEquals(e.type, ParkingLotException.ExceptionType.INVALID_VEHICLE);
+            }
+      }
+
+      @Test
       public void givenVehicle_WhenAlreadyParked_ShouldThrowCustomException() {
             ParkingLot parkingLot = new ParkingLot();
             try {
@@ -36,8 +45,9 @@ public class ParkingLotTest {
       @Test
       public void givenVehicle_WhenUnparked_ShouldReturnTrue() throws ParkingLotException {
             parkingLot.parkedVehicle("GA-08-A-2323");
-            boolean isUnparked = parkingLot.unparkVehicle("GA-08-A-2323");
-            Assert.assertEquals(false, isUnparked);
+            parkingLot.unparkVehicle("GA-08-A-2323");
+            boolean isUnparked = parkingLot.isVehiclePresent("GA-08-A-2323");
+            Assert.assertFalse(isUnparked);
       }
 
       @Test
