@@ -1,6 +1,7 @@
 package com.bridgelabz.ParkingLot;
 
 import com.bridgelabz.ParkingLot.exception.ParkingLotException;
+import com.bridgelabz.ParkingLot.service.Owner;
 import com.bridgelabz.ParkingLot.service.ParkingLot;
 import org.junit.Assert;
 import org.junit.Before;
@@ -16,8 +17,8 @@ public class ParkingLotTest {
 
       @Test
       public void givenVehicle_WhenParked_ShouldReturnTrue() throws ParkingLotException {
-            ParkingLot parkingLot = new ParkingLot();
-            boolean isParked = parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
+            parkingLot.parkedVehicle("GA-08-A-2323");
+            boolean isParked = parkingLot.isVehiclePresent("GA-08-A-2323");
             Assert.assertTrue(isParked);
       }
 
@@ -25,8 +26,8 @@ public class ParkingLotTest {
       public void givenVehicle_WhenAlreadyParked_ShouldThrowCustomException() {
             ParkingLot parkingLot = new ParkingLot();
             try {
-                  parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
-                  parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
+                  parkingLot.parkedVehicle("GA-08-A-2323");
+                  parkingLot.parkedVehicle("GA-08-A-2323");
             } catch (ParkingLotException e) {
                   Assert.assertEquals(e.type, ParkingLotException.ExceptionType.ALREADY_PARKED);
             }
@@ -34,7 +35,7 @@ public class ParkingLotTest {
 
       @Test
       public void givenVehicle_WhenUnparked_ShouldReturnTrue() throws ParkingLotException {
-            parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
+            parkingLot.parkedVehicle("GA-08-A-2323");
             boolean isUnparked = parkingLot.unparkVehicle("GA-08-A-2323");
             Assert.assertEquals(false, isUnparked);
       }
@@ -52,14 +53,23 @@ public class ParkingLotTest {
       public void givenParkingLotWithSize_WhenFull_ShouldInformOwnerAndReturnTrue() {
             parkingLot.parkinLotSize(3);
             try {
-                  parkingLot.parkedVehicle("GA-08-A-2323", "Prajyot");
-                  parkingLot.parkedVehicle("GA-08-A-3455", "Rahul");
-                  parkingLot.parkedVehicle("GA-08-A-4567", "Anubhav");
-                  parkingLot.parkedVehicle("GA-08-A-4557", "John");
+                  parkingLot.parkedVehicle("GA-08-A-2323");
+                  parkingLot.parkedVehicle("MH-08-A-3455");
+                  parkingLot.parkedVehicle("GJ-08-A-4567");
+                  parkingLot.parkedVehicle("AP-08-A-4557");
             } catch (ParkingLotException e) {
-                  System.out.println(e.getMessage());
                   Assert.assertEquals(e.type, ParkingLotException.ExceptionType.PARKING_LOT_FULL);
             }
-
       }
+
+      @Test
+      public void givenParkingLotWithSize_WhenFullInformOwner_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {
+            parkingLot.parkinLotSize(3);
+            parkingLot.parkedVehicle("GA-08-A-2323");
+            parkingLot.parkedVehicle("MH-08-A-3455");
+            parkingLot.parkedVehicle("GJ-08-A-4567");
+            boolean informedOwner = parkingLot.owner.isParkingLotFUll();
+            Assert.assertTrue(informedOwner);
+      }
+
 }

@@ -2,35 +2,32 @@ package com.bridgelabz.ParkingLot.service;
 
 import com.bridgelabz.ParkingLot.exception.ParkingLotException;
 
-import java.util.HashMap;
+import java.util.HashSet;
 
 public class ParkingLot {
-      HashMap<String, String> isVehicleParked = new HashMap<>();
-      private int sizeOfParkingLot;
+      HashSet<String> isVehicleParked = new HashSet<>();
+      private int sizeOfParkingLot = 10;
+      public Owner owner = new Owner();
+      public boolean isVehiclePresent(String vehicleNumber){
+            return isVehicleParked.contains(vehicleNumber);
+      }
 
-      public boolean parkedVehicle(String vehicleNumber, String owner) throws ParkingLotException {
-            if (isVehicleParked.containsKey(vehicleNumber))
+      public void parkedVehicle(String vehicleNumber) throws ParkingLotException {
+            if (isVehicleParked.contains(vehicleNumber))
                   throw new ParkingLotException("Already Parked", ParkingLotException.ExceptionType.ALREADY_PARKED);
-            if (ownerKnowsIsFull())
+            if (isVehicleParked.size() == sizeOfParkingLot)
                   throw new ParkingLotException("Parking Lot Full", ParkingLotException.ExceptionType.PARKING_LOT_FULL);
-            isVehicleParked.put(vehicleNumber, owner);
-            return isVehicleParked.containsKey(vehicleNumber);
+            isVehicleParked.add(vehicleNumber);
+            if (isVehicleParked.size() == sizeOfParkingLot)
+                  owner.parkingLotFull(true);
       }
 
       public boolean unparkVehicle(String vehicleNumber) throws ParkingLotException {
-            if (!isVehicleParked.containsKey(vehicleNumber))
+            if (!isVehicleParked.contains(vehicleNumber))
                   throw new ParkingLotException("Vehicle not present in lot",
                           ParkingLotException.ExceptionType.VEHICLE_NOT_PRESENT);
             isVehicleParked.remove(vehicleNumber);
-            return isVehicleParked.containsKey(vehicleNumber);
-      }
-
-      public boolean ownerKnowsIsFull() {
-            if (isVehicleParked.size() == sizeOfParkingLot) {
-
-                  return true;
-            }
-            return false;
+            return isVehicleParked.contains(vehicleNumber);
       }
 
       public void parkinLotSize(int size) {
