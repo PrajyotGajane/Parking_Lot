@@ -1,7 +1,6 @@
 package com.bridgelabz.ParkingLot;
 
 import com.bridgelabz.ParkingLot.exception.ParkingLotException;
-import com.bridgelabz.ParkingLot.service.Owner;
 import com.bridgelabz.ParkingLot.service.ParkingLot;
 import org.junit.Assert;
 import org.junit.Before;

@@ -1,6 +1,8 @@
 package com.bridgelabz.ParkingLot.service;
 
 import com.bridgelabz.ParkingLot.exception.ParkingLotException;
+import com.bridgelabz.ParkingLot.model.AirportSecurity;
+import com.bridgelabz.ParkingLot.model.Owner;
 
 import java.util.HashSet;
 

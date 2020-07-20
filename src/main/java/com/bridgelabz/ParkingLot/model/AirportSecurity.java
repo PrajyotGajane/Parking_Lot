@@ -1,6 +1,6 @@
-package com.bridgelabz.ParkingLot.service;
+package com.bridgelabz.ParkingLot.model;
 
-public class Owner {
+public class AirportSecurity {
       public boolean isParkingLotFUll;
       public void parkingLotFull(boolean isParkingLotFUll) {
             this.isParkingLotFUll = isParkingLotFUll;
