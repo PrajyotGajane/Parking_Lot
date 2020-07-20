@@ -1,8 +1,6 @@
 package com.bridgelabz.ParkingLot.service;
 
 import com.bridgelabz.ParkingLot.exception.ParkingLotException;
-import com.bridgelabz.ParkingLot.model.AirportSecurity;
-import com.bridgelabz.ParkingLot.model.Owner;
 
 import java.util.HashSet;
 
@@ -11,7 +9,8 @@ public class ParkingLot {
       private int sizeOfParkingLot = 10;
       public Owner owner = new Owner();
       public AirportSecurity airportSecurity = new AirportSecurity();
-      public boolean isVehiclePresent(String vehicleNumber){
+
+      public boolean isVehiclePresent(String vehicleNumber) {
             return isVehicleParked.contains(vehicleNumber);
       }
 

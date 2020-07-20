@@ -77,7 +77,7 @@ public class ParkingLotTest {
             parkingLot.parkedVehicle("GA-08-A-2323");
             parkingLot.parkedVehicle("MH-08-A-3455");
             parkingLot.parkedVehicle("GJ-08-A-4567");
-            boolean informedOwner = parkingLot.owner.isParkingLotFUll();
+            boolean informedOwner = parkingLot.owner.isParkingLotFull();
 
             Assert.assertTrue(informedOwner);
       }
@@ -88,7 +88,7 @@ public class ParkingLotTest {
             parkingLot.parkedVehicle("GA-08-A-2323");
             parkingLot.parkedVehicle("MH-08-A-3455");
             parkingLot.parkedVehicle("GJ-08-A-4567");
-            boolean informedAirportSecuirty = parkingLot.airportSecurity.isParkingLotFUll();
+            boolean informedAirportSecuirty = parkingLot.airportSecurity.isParkingLotFull();
             Assert.assertTrue(informedAirportSecuirty);
       }
 
@@ -98,7 +98,7 @@ public class ParkingLotTest {
             parkingLot.parkedVehicle("GA-08-A-2323");
             parkingLot.parkedVehicle("GJ-08-A-4567");
             parkingLot.unparkVehicle("GJ-08-A-4567");
-            boolean informedOwner = parkingLot.owner.isParkingLotFUll();
+            boolean informedOwner = parkingLot.owner.isParkingLotFull();
             Assert.assertFalse(informedOwner);
       }
 
