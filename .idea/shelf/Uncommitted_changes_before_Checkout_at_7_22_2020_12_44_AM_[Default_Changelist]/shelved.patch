@@ -1,0 +1,272 @@
+Index: src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.bridgelabz.ParkingLot;\r\n\r\nimport com.bridgelabz.ParkingLot.exception.ParkingLotException;\r\nimport com.bridgelabz.ParkingLot.observer.AirportSecurity;\r\nimport com.bridgelabz.ParkingLot.observer.Owner;\r\nimport com.bridgelabz.ParkingLot.service.ParkingLot;\r\nimport org.junit.Assert;\r\nimport org.junit.Before;\r\nimport org.junit.Test;\r\n\r\npublic class ParkingLotTest {\r\n      ParkingLot parkingLot;\r\n\r\n      @Before\r\n      public void setUp() {\r\n            parkingLot = new ParkingLot(new Owner(), new AirportSecurity());\r\n      }\r\n\r\n      @Test\r\n      public void givenVehicle_WhenParked_ShouldReturnTrue() throws ParkingLotException {\r\n            parkingLot.parkedVehicle(1,\"GA-08-A-2323\");\r\n            boolean isParked = parkingLot.isVehiclePresent(\"GA-08-A-2323\");\r\n            Assert.assertTrue(isParked);\r\n      }\r\n\r\n      @Test\r\n      public void givenVehicleNull_WhenParked_ShouldReturnTrue() {\r\n            try {\r\n                  parkingLot.parkedVehicle(1,null);\r\n            } catch (ParkingLotException e) {\r\n                  Assert.assertEquals(e.type, ParkingLotException.ExceptionType.INVALID_VEHICLE);\r\n            }\r\n      }\r\n\r\n      @Test\r\n      public void givenVehicle_WhenAlreadyParked_ShouldThrowCustomException() {\r\n            try {\r\n                  parkingLot.parkedVehicle(1,\"GA-08-A-2323\");\r\n                  parkingLot.parkedVehicle(1,\"GA-08-A-2323\");\r\n            } catch (ParkingLotException e) {\r\n                  Assert.assertEquals(e.type, ParkingLotException.ExceptionType.ALREADY_PARKED);\r\n            }\r\n      }\r\n\r\n      @Test\r\n      public void givenVehicle_WhenUnparked_ShouldReturnTrue() throws ParkingLotException {\r\n            parkingLot.parkedVehicle(1,\"GA-08-A-2323\");\r\n            parkingLot.unparkVehicle(\"GA-08-A-2323\");\r\n            boolean isUnparked = parkingLot.isVehiclePresent(\"GA-08-A-2323\");\r\n            Assert.assertFalse(isUnparked);\r\n      }\r\n\r\n      @Test\r\n      public void givenVehicleToUnpark_WhenNotPresent_ShouldThrowCustomException() {\r\n            try {\r\n                  parkingLot.unparkVehicle(\"GA-08-A-2323\");\r\n            } catch (ParkingLotException e) {\r\n                  Assert.assertEquals(e.type, ParkingLotException.ExceptionType.VEHICLE_NOT_PRESENT);\r\n            }\r\n      }\r\n\r\n      @Test\r\n      public void givenParkingLotWithSize_WhenFull_ShouldInformOwnerAndReturnTrue() {\r\n            parkingLot.parkinLotSize(3);\r\n            try {\r\n                  parkingLot.parkedVehicle(1,\"GA-08-A-2323\");\r\n                  parkingLot.parkedVehicle(2,\"MH-08-A-3455\");\r\n                  parkingLot.parkedVehicle(3,\"GJ-08-A-4567\");\r\n                  parkingLot.parkedVehicle(4,\"AP-08-A-4557\");\r\n            } catch (ParkingLotException e) {\r\n                  Assert.assertEquals(e.type, ParkingLotException.ExceptionType.PARKING_LOT_FULL);\r\n            }\r\n      }\r\n\r\n      @Test\r\n      public void givenParkingLotWithSize_WhenFullInformOwner_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {\r\n            parkingLot.parkinLotSize(3);\r\n            parkingLot.parkedVehicle(1,\"GA-08-A-2323\");\r\n            parkingLot.parkedVehicle(2,\"MH-08-A-3455\");\r\n            parkingLot.parkedVehicle(3,\"GJ-08-A-4567\");\r\n            boolean informedOwner = parkingLot.owner.isParkingLotFull();\r\n\r\n            Assert.assertTrue(informedOwner);\r\n      }\r\n\r\n      @Test\r\n      public void givenParkingLotWithSize_WhenFullInformAirportSecurity_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {\r\n            parkingLot.parkinLotSize(3);\r\n            parkingLot.parkedVehicle(1,\"GA-08-A-2323\");\r\n            parkingLot.parkedVehicle(2,\"MH-08-A-3455\");\r\n            parkingLot.parkedVehicle(3,\"GJ-08-A-4567\");\r\n            boolean informedAirportSecuirty = parkingLot.airportSecurity.isParkingLotFull();\r\n            Assert.assertTrue(informedAirportSecuirty);\r\n      }\r\n\r\n      @Test\r\n      public void givenParkingLotWithSize_WhenSpaceAvailableInformOwner_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {\r\n            parkingLot.parkinLotSize(10);\r\n            parkingLot.parkedVehicle(1,\"GA-08-A-2323\");\r\n            parkingLot.parkedVehicle(2,\"GJ-08-A-4567\");\r\n            parkingLot.unparkVehicle(\"GJ-08-A-4567\");\r\n            parkingLot.parkedVehicle(2,\"MH-08-A-4567\");\r\n            parkingLot.parkedVehicle(3,\"TN-08-A-4567\");\r\n            parkingLot.parkedVehicle(4,\"KL-08-A-4567\");\r\n            boolean informedOwner = parkingLot.owner.isParkingLotFull();\r\n            Assert.assertFalse(informedOwner);\r\n      }\r\n\r\n      @Test\r\n      public void givenVehicleSpotAndNumberToParkingAttendant_WhenParkedInSlot_ShouldReturnTrue()\r\n              throws ParkingLotException {\r\n            parkingLot.parkedVehicle(1, \"MH-32-AW-4348\");\r\n            boolean isPresent = parkingLot.isVehiclePresent(\"MH-32-AW-4348\");\r\n            Assert.assertTrue(isPresent);\r\n      }\r\n\r\n      @Test\r\n      public void givenParkedVehicle_WhenFound_ShouldReturnSpotInParkingLot() throws ParkingLotException {\r\n            parkingLot.parkedVehicle(1,\"GA-08-A-2323\");\r\n            parkingLot.parkedVehicle(2,\"GJ-08-A-4567\");\r\n            parkingLot.parkedVehicle(3,\"MH-08-A-4567\");\r\n            int position = parkingLot.vehicleSpotInLot(\"MH-08-A-4567\");\r\n            Assert.assertEquals(3, position);\r\n      }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java	(revision 5cbe51fdcfc7e7096c1cfb3490d6671baad1db71)
++++ src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java	(date 1595314158172)
+@@ -17,16 +17,20 @@
+       }
+ 
+       @Test
+-      public void givenVehicle_WhenParked_ShouldReturnTrue() throws ParkingLotException {
+-            parkingLot.parkedVehicle(1,"GA-08-A-2323");
+-            boolean isParked = parkingLot.isVehiclePresent("GA-08-A-2323");
+-            Assert.assertTrue(isParked);
++      public void givenVehicle_WhenParked_ShouldReturnTrue() {
++            try {
++                  parkingLot.parkedVehicle(1, "GA-08-A-2323");
++                  boolean isParked = parkingLot.isVehiclePresent("GA-08-A-2323");
++                  Assert.assertTrue(isParked);
++            } catch (ParkingLotException e) {
++                  e.printStackTrace();
++            }
+       }
+ 
+       @Test
+       public void givenVehicleNull_WhenParked_ShouldReturnTrue() {
+             try {
+-                  parkingLot.parkedVehicle(1,null);
++                  parkingLot.parkedVehicle(1, null);
+             } catch (ParkingLotException e) {
+                   Assert.assertEquals(e.type, ParkingLotException.ExceptionType.INVALID_VEHICLE);
+             }
+@@ -35,8 +39,8 @@
+       @Test
+       public void givenVehicle_WhenAlreadyParked_ShouldThrowCustomException() {
+             try {
+-                  parkingLot.parkedVehicle(1,"GA-08-A-2323");
+-                  parkingLot.parkedVehicle(1,"GA-08-A-2323");
++                  parkingLot.parkedVehicle(1, "GA-08-A-2323");
++                  parkingLot.parkedVehicle(1, "GA-08-A-2323");
+             } catch (ParkingLotException e) {
+                   Assert.assertEquals(e.type, ParkingLotException.ExceptionType.ALREADY_PARKED);
+             }
+@@ -44,7 +48,7 @@
+ 
+       @Test
+       public void givenVehicle_WhenUnparked_ShouldReturnTrue() throws ParkingLotException {
+-            parkingLot.parkedVehicle(1,"GA-08-A-2323");
++            parkingLot.parkedVehicle(1, "GA-08-A-2323");
+             parkingLot.unparkVehicle("GA-08-A-2323");
+             boolean isUnparked = parkingLot.isVehiclePresent("GA-08-A-2323");
+             Assert.assertFalse(isUnparked);
+@@ -63,63 +67,82 @@
+       public void givenParkingLotWithSize_WhenFull_ShouldInformOwnerAndReturnTrue() {
+             parkingLot.parkinLotSize(3);
+             try {
+-                  parkingLot.parkedVehicle(1,"GA-08-A-2323");
+-                  parkingLot.parkedVehicle(2,"MH-08-A-3455");
+-                  parkingLot.parkedVehicle(3,"GJ-08-A-4567");
+-                  parkingLot.parkedVehicle(4,"AP-08-A-4557");
++                  parkingLot.parkedVehicle(1, "GA-08-A-2323");
++                  parkingLot.parkedVehicle(2, "MH-08-A-3455");
++                  parkingLot.parkedVehicle(3, "GJ-08-A-4567");
++                  parkingLot.parkedVehicle(4, "AP-08-A-4557");
+             } catch (ParkingLotException e) {
+                   Assert.assertEquals(e.type, ParkingLotException.ExceptionType.PARKING_LOT_FULL);
+             }
+       }
+ 
+       @Test
+-      public void givenParkingLotWithSize_WhenFullInformOwner_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {
++      public void givenParkingLotWithSize_WhenFullInformOwner_ShouldInformOwnerAndReturnTrue() {
+             parkingLot.parkinLotSize(3);
+-            parkingLot.parkedVehicle(1,"GA-08-A-2323");
+-            parkingLot.parkedVehicle(2,"MH-08-A-3455");
+-            parkingLot.parkedVehicle(3,"GJ-08-A-4567");
+-            boolean informedOwner = parkingLot.owner.isParkingLotFull();
+-
+-            Assert.assertTrue(informedOwner);
++            try {
++                  parkingLot.parkedVehicle(1, "GA-08-A-2323");
++                  parkingLot.parkedVehicle(2, "MH-08-A-3455");
++                  parkingLot.parkedVehicle(3, "GJ-08-A-4567");
++                  boolean informedOwner = parkingLot.owner.isParkingLotFull();
++                  Assert.assertTrue(informedOwner);
++            } catch (ParkingLotException e) {
++                  e.printStackTrace();
++            }
+       }
+ 
+       @Test
+-      public void givenParkingLotWithSize_WhenFullInformAirportSecurity_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {
++      public void givenParkingLotWithSize_WhenFullInformAirportSecurity_ShouldInformOwnerAndReturnTrue() {
+             parkingLot.parkinLotSize(3);
+-            parkingLot.parkedVehicle(1,"GA-08-A-2323");
+-            parkingLot.parkedVehicle(2,"MH-08-A-3455");
+-            parkingLot.parkedVehicle(3,"GJ-08-A-4567");
+-            boolean informedAirportSecuirty = parkingLot.airportSecurity.isParkingLotFull();
+-            Assert.assertTrue(informedAirportSecuirty);
++            try {
++                  parkingLot.parkedVehicle(1, "GA-08-A-2323");
++                  parkingLot.parkedVehicle(2, "MH-08-A-3455");
++                  parkingLot.parkedVehicle(3, "GJ-08-A-4567");
++                  boolean informedAirportSecuirty = parkingLot.airportSecurity.isParkingLotFull();
++                  Assert.assertTrue(informedAirportSecuirty);
++            } catch (ParkingLotException e) {
++                  e.printStackTrace();
++            }
++
+       }
+ 
+       @Test
+-      public void givenParkingLotWithSize_WhenSpaceAvailableInformOwner_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {
+-            parkingLot.parkinLotSize(10);
+-            parkingLot.parkedVehicle(1,"GA-08-A-2323");
+-            parkingLot.parkedVehicle(2,"GJ-08-A-4567");
+-            parkingLot.unparkVehicle("GJ-08-A-4567");
+-            parkingLot.parkedVehicle(2,"MH-08-A-4567");
+-            parkingLot.parkedVehicle(3,"TN-08-A-4567");
+-            parkingLot.parkedVehicle(4,"KL-08-A-4567");
+-            boolean informedOwner = parkingLot.owner.isParkingLotFull();
+-            Assert.assertFalse(informedOwner);
++      public void givenParkingLotWithSize_WhenSpaceAvailableInformOwner_ShouldInformOwnerAndReturnTrue() {
++            try {
++                  parkingLot.parkinLotSize(10);
++                  parkingLot.parkedVehicle(1, "GA-08-A-2323");
++                  parkingLot.parkedVehicle(2, "GJ-08-A-4567");
++                  parkingLot.unparkVehicle("GJ-08-A-4567");
++                  parkingLot.parkedVehicle(2, "MH-08-A-4567");
++                  parkingLot.parkedVehicle(3, "TN-08-A-4567");
++                  parkingLot.parkedVehicle(4, "KL-08-A-4567");
++                  boolean informedOwner = parkingLot.owner.isParkingLotFull();
++                  Assert.assertFalse(informedOwner);
++            } catch (ParkingLotException e) {
++                  e.printStackTrace();
++            }
+       }
+ 
+       @Test
+-      public void givenVehicleSpotAndNumberToParkingAttendant_WhenParkedInSlot_ShouldReturnTrue()
+-              throws ParkingLotException {
+-            parkingLot.parkedVehicle(1, "MH-32-AW-4348");
+-            boolean isPresent = parkingLot.isVehiclePresent("MH-32-AW-4348");
+-            Assert.assertTrue(isPresent);
++      public void givenVehicleSpotAndNumberToParkingAttendant_WhenParkedInSlot_ShouldReturnTrue() {
++            try {
++                  parkingLot.parkedVehicle(1, "MH-32-AW-4348");
++                  boolean isPresent = parkingLot.isVehiclePresent("MH-32-AW-4348");
++                  Assert.assertTrue(isPresent);
++            } catch (ParkingLotException e) {
++                  e.printStackTrace();
++            }
+       }
+ 
+       @Test
+-      public void givenParkedVehicle_WhenFound_ShouldReturnSpotInParkingLot() throws ParkingLotException {
+-            parkingLot.parkedVehicle(1,"GA-08-A-2323");
+-            parkingLot.parkedVehicle(2,"GJ-08-A-4567");
+-            parkingLot.parkedVehicle(3,"MH-08-A-4567");
+-            int position = parkingLot.vehicleSpotInLot("MH-08-A-4567");
+-            Assert.assertEquals(3, position);
++      public void givenParkedVehicle_WhenFound_ShouldReturnSpotInParkingLot() {
++            try {
++                  parkingLot.parkedVehicle(1, "GA-08-A-2323");
++                  parkingLot.parkedVehicle(2, "GJ-08-A-4567");
++                  parkingLot.parkedVehicle(3, "MH-08-A-4567");
++                  int position = parkingLot.vehicleSpotInLot("MH-08-A-4567");
++                  Assert.assertEquals(3, position);
++            } catch (ParkingLotException e) {
++                  e.printStackTrace();
++            }
+       }
+ }
+Index: src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.bridgelabz.ParkingLot.service;\r\n\r\nimport com.bridgelabz.ParkingLot.exception.ParkingLotException;\r\nimport com.bridgelabz.ParkingLot.observer.AirportSecurity;\r\nimport com.bridgelabz.ParkingLot.observer.Observer;\r\nimport com.bridgelabz.ParkingLot.observer.Owner;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.HashMap;\r\nimport java.util.List;\r\nimport java.util.Map;\r\n\r\npublic class ParkingLot {\r\n      public ParkAttendant parkAttendant;\r\n      private HashMap<Integer, String> parkingSpotMap = new HashMap<>();\r\n      private int sizeOfParkingLot = 10;\r\n      public Owner owner;\r\n      public AirportSecurity airportSecurity;\r\n      List<Observer> observerList = new ArrayList<>();\r\n\r\n      public boolean isVehiclePresent(String vehicleNumber) {\r\n            return parkingSpotMap.containsValue(vehicleNumber);\r\n      }\r\n\r\n      public ParkingLot(Owner owner, AirportSecurity airportSecurity) {\r\n            this.owner = owner;\r\n            this.airportSecurity = airportSecurity;\r\n            this.parkAttendant = new ParkAttendant();\r\n            this.observerList.add(owner);\r\n            this.observerList.add(airportSecurity);\r\n      }\r\n\r\n      public void parkedVehicle(int spot, String vehicleNumber) throws ParkingLotException {\r\n            if (vehicleNumber == null)\r\n                  throw new ParkingLotException(\"Invalid Vehicle\", ParkingLotException.ExceptionType.INVALID_VEHICLE);\r\n            if (parkingSpotMap.containsValue(vehicleNumber))\r\n                  throw new ParkingLotException(\"Already Parked\", ParkingLotException.ExceptionType.ALREADY_PARKED);\r\n            if (parkingSpotMap.size() == sizeOfParkingLot)\r\n                  throw new ParkingLotException(\"Parking Lot Full\", ParkingLotException.ExceptionType.PARKING_LOT_FULL);\r\n            parkingSpotMap = parkAttendant.attendantParkedVehicle(spot, vehicleNumber, parkingSpotMap);\r\n            if (parkingSpotMap.size() == sizeOfParkingLot) {\r\n                  notifyAllObservers(true);\r\n            }\r\n      }\r\n\r\n      public void notifyAllObservers(boolean status) {\r\n            for (Observer observer : observerList) {\r\n                  observer.parkingLotFull(status);\r\n            }\r\n      }\r\n\r\n      public void unparkVehicle(String vehicleNumber) throws ParkingLotException {\r\n            Integer key = null;\r\n            if (!parkingSpotMap.containsValue(vehicleNumber))\r\n                  throw new ParkingLotException(\"Vehicle not present in lot\",\r\n                          ParkingLotException.ExceptionType.VEHICLE_NOT_PRESENT);\r\n            for (Map.Entry<Integer, String> entry : parkingSpotMap.entrySet()) {\r\n                  if (entry.getValue().equals(vehicleNumber)) {\r\n                        key = entry.getKey();\r\n                  }\r\n            }\r\n            parkingSpotMap.put(key, null);\r\n            notifyAllObservers(false);\r\n      }\r\n\r\n      public int vehicleSpotInLot(String vehicelNumber) throws ParkingLotException {\r\n            int spot = parkingSpotMap.keySet()\r\n                    .stream()\r\n                    .filter(key -> vehicelNumber.equals(parkingSpotMap.get(key)))\r\n                    .findFirst().get();\r\n            this.unparkVehicle(vehicelNumber);\r\n            return spot;\r\n      }\r\n\r\n      public void parkinLotSize(int size) {\r\n            this.sizeOfParkingLot = size;\r\n      }\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java	(revision 5cbe51fdcfc7e7096c1cfb3490d6671baad1db71)
++++ src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java	(date 1595356100442)
+@@ -18,10 +18,6 @@
+       public AirportSecurity airportSecurity;
+       List<Observer> observerList = new ArrayList<>();
+ 
+-      public boolean isVehiclePresent(String vehicleNumber) {
+-            return parkingSpotMap.containsValue(vehicleNumber);
+-      }
+-
+       public ParkingLot(Owner owner, AirportSecurity airportSecurity) {
+             this.owner = owner;
+             this.airportSecurity = airportSecurity;
+@@ -30,6 +26,10 @@
+             this.observerList.add(airportSecurity);
+       }
+ 
++      public boolean isVehiclePresent(String vehicleNumber) {
++            return parkingSpotMap.containsValue(vehicleNumber);
++      }
++
+       public void parkedVehicle(int spot, String vehicleNumber) throws ParkingLotException {
+             if (vehicleNumber == null)
+                   throw new ParkingLotException("Invalid Vehicle", ParkingLotException.ExceptionType.INVALID_VEHICLE);
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n<project version=\"4\">\r\n  <component name=\"BranchesTreeState\">\r\n    <expand>\r\n      <path>\r\n        <item name=\"ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n        <item name=\"LOCAL_ROOT\" type=\"e8cecc67:BranchNodeDescriptor\" />\r\n      </path>\r\n    </expand>\r\n    <select />\r\n  </component>\r\n  <component name=\"ChangeListManager\">\r\n    <list default=\"true\" id=\"dd0e90e2-9905-4a46-9f6a-54fedee099aa\" name=\"Default Changelist\" comment=\"\">\r\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/observer/Owner.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/observer/Owner.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkAttendant.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkAttendant.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkingLot.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkingLot.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/build/classes/java/test/com/bridgelabz/ParkingLot/ParkingLotTest.class\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/build/classes/java/test/com/bridgelabz/ParkingLot/ParkingLotTest.class\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/observer/Owner.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/observer/Owner.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkAttendant.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkAttendant.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java\" afterDir=\"false\" />\r\n      <change beforePath=\"$PROJECT_DIR$/src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java\" afterDir=\"false\" />\r\n    </list>\r\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\r\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\r\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\r\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\r\n  </component>\r\n  <component name=\"ExternalProjectsData\">\r\n    <projectState path=\"$PROJECT_DIR$\">\r\n      <ProjectState />\r\n    </projectState>\r\n  </component>\r\n  <component name=\"ExternalProjectsManager\">\r\n    <system id=\"GRADLE\">\r\n      <state>\r\n        <task path=\"$PROJECT_DIR$\">\r\n          <activation />\r\n        </task>\r\n        <projects_view />\r\n      </state>\r\n    </system>\r\n  </component>\r\n  <component name=\"FileTemplateManagerImpl\">\r\n    <option name=\"RECENT_TEMPLATES\">\r\n      <list>\r\n        <option value=\"Interface\" />\r\n        <option value=\"Class\" />\r\n      </list>\r\n    </option>\r\n  </component>\r\n  <component name=\"Git.Settings\">\r\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\r\n  </component>\r\n  <component name=\"ProjectId\" id=\"1ep3vXSnj9DkU00OyCQNZOzQqXw\" />\r\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\r\n  <component name=\"ProjectViewState\">\r\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\r\n    <option name=\"showLibraryContents\" value=\"true\" />\r\n  </component>\r\n  <component name=\"PropertiesComponent\">\r\n    <property name=\"last_directory_selection\" value=\"$PROJECT_DIR$/src/main/java/com\" />\r\n  </component>\r\n  <component name=\"RecentsManager\">\r\n    <key name=\"CreateClassDialog.RecentsKey\">\r\n      <recent name=\"com.bridgelabz.ParkingLot.service\" />\r\n      <recent name=\"com.bridgelabz.ParkingLot\" />\r\n    </key>\r\n  </component>\r\n  <component name=\"RunManager\" selected=\"Gradle.ParkingLotTest\">\r\n    <configuration name=\"ParkingLotTest\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" value=\"--tests &quot;com.bridgelabz.ParkingLot.ParkingLotTest&quot;\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list>\r\n            <option value=\":test\" />\r\n          </list>\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"ParkingLotTest.givenCarDetailsToParkingAttendant_WhenParkedAsPerProvidedSlot_ShouldReturnTrue\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" value=\"--tests &quot;com.bridgelabz.ParkingLot.ParkingLotTest.givenCarDetailsToParkingAttendant_WhenParkedAsPerProvidedSlot_ShouldReturnTrue&quot;\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list>\r\n            <option value=\":test\" />\r\n          </list>\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"ParkingLotTest.givenParkedVehicle_WhenFound_ShouldReturnSpotInParkingLot\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" value=\"--tests &quot;com.bridgelabz.ParkingLot.ParkingLotTest.givenParkedVehicle_WhenFound_ShouldReturnSpotInParkingLot&quot;\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list>\r\n            <option value=\":test\" />\r\n          </list>\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"ParkingLotTest.givenParkingLotWithSize_WhenSpaceAvailableInformOwner_ShouldInformOwnerAndReturnTrue\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" value=\"--tests &quot;com.bridgelabz.ParkingLot.ParkingLotTest.givenParkingLotWithSize_WhenSpaceAvailableInformOwner_ShouldInformOwnerAndReturnTrue&quot;\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list>\r\n            <option value=\":test\" />\r\n          </list>\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <configuration name=\"ParkingLotTest.givenVehicle_WhenAlreadyParked_ShouldThrowCustomException\" type=\"GradleRunConfiguration\" factoryName=\"Gradle\" temporary=\"true\">\r\n      <ExternalSystemSettings>\r\n        <option name=\"executionName\" />\r\n        <option name=\"externalProjectPath\" value=\"$PROJECT_DIR$\" />\r\n        <option name=\"externalSystemIdString\" value=\"GRADLE\" />\r\n        <option name=\"scriptParameters\" value=\"--tests &quot;com.bridgelabz.ParkingLot.ParkingLotTest.givenVehicle_WhenAlreadyParked_ShouldThrowCustomException&quot;\" />\r\n        <option name=\"taskDescriptions\">\r\n          <list />\r\n        </option>\r\n        <option name=\"taskNames\">\r\n          <list>\r\n            <option value=\":test\" />\r\n          </list>\r\n        </option>\r\n        <option name=\"vmOptions\" />\r\n      </ExternalSystemSettings>\r\n      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>\r\n      <method v=\"2\" />\r\n    </configuration>\r\n    <recent_temporary>\r\n      <list>\r\n        <item itemvalue=\"Gradle.ParkingLotTest\" />\r\n        <item itemvalue=\"Gradle.ParkingLotTest.givenVehicle_WhenAlreadyParked_ShouldThrowCustomException\" />\r\n        <item itemvalue=\"Gradle.ParkingLotTest.givenParkingLotWithSize_WhenSpaceAvailableInformOwner_ShouldInformOwnerAndReturnTrue\" />\r\n        <item itemvalue=\"Gradle.ParkingLotTest.givenParkedVehicle_WhenFound_ShouldReturnSpotInParkingLot\" />\r\n        <item itemvalue=\"Gradle.ParkingLotTest.givenCarDetailsToParkingAttendant_WhenParkedAsPerProvidedSlot_ShouldReturnTrue\" />\r\n      </list>\r\n    </recent_temporary>\r\n  </component>\r\n  <component name=\"SvnConfiguration\">\r\n    <configuration />\r\n  </component>\r\n  <component name=\"TaskManager\">\r\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\r\n      <changelist id=\"dd0e90e2-9905-4a46-9f6a-54fedee099aa\" name=\"Default Changelist\" comment=\"\" />\r\n      <created>1595004937915</created>\r\n      <option name=\"number\" value=\"Default\" />\r\n      <option name=\"presentableId\" value=\"Default\" />\r\n      <updated>1595004937915</updated>\r\n    </task>\r\n    <servers />\r\n  </component>\r\n  <component name=\"Vcs.Log.Tabs.Properties\">\r\n    <option name=\"TAB_STATES\">\r\n      <map>\r\n        <entry key=\"MAIN\">\r\n          <value>\r\n            <State />\r\n          </value>\r\n        </entry>\r\n      </map>\r\n    </option>\r\n    <option name=\"oldMeFiltersMigrated\" value=\"true\" />\r\n  </component>\r\n  <component name=\"WindowStateProjectService\">\r\n    <state x=\"488\" y=\"65\" key=\"#com.intellij.ide.util.MemberChooser\" timestamp=\"1595269478588\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state x=\"488\" y=\"65\" key=\"#com.intellij.ide.util.MemberChooser/0.0.1366.728@0.0.1366.728\" timestamp=\"1595269478588\" />\r\n    <state x=\"466\" y=\"233\" width=\"433\" height=\"268\" key=\"#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes\" timestamp=\"1595233677342\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state x=\"466\" y=\"233\" width=\"433\" height=\"268\" key=\"#com.intellij.refactoring.move.moveClassesOrPackages.MoveClassesOrPackagesDialog.classes/0.0.1366.728@0.0.1366.728\" timestamp=\"1595233677342\" />\r\n    <state x=\"413\" y=\"111\" key=\"#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog\" timestamp=\"1595180738586\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state x=\"413\" y=\"111\" key=\"#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728\" timestamp=\"1595180738586\" />\r\n    <state width=\"1323\" height=\"190\" key=\"GridCell.Tab.0.bottom\" timestamp=\"1595305697535\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state width=\"1323\" height=\"190\" key=\"GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728\" timestamp=\"1595305697535\" />\r\n    <state width=\"1323\" height=\"190\" key=\"GridCell.Tab.0.center\" timestamp=\"1595305697535\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state width=\"1323\" height=\"190\" key=\"GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728\" timestamp=\"1595305697535\" />\r\n    <state width=\"1323\" height=\"190\" key=\"GridCell.Tab.0.left\" timestamp=\"1595305697535\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state width=\"1323\" height=\"190\" key=\"GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728\" timestamp=\"1595305697535\" />\r\n    <state width=\"1323\" height=\"190\" key=\"GridCell.Tab.0.right\" timestamp=\"1595305697535\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state width=\"1323\" height=\"190\" key=\"GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728\" timestamp=\"1595305697535\" />\r\n    <state x=\"498\" y=\"142\" key=\"chooseDestDirectoryDialog\" timestamp=\"1595008906045\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state x=\"498\" y=\"142\" key=\"chooseDestDirectoryDialog/0.0.1366.728@0.0.1366.728\" timestamp=\"1595008906045\" />\r\n    <state x=\"65\" y=\"0\" key=\"new project wizard\" timestamp=\"1595158175253\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state x=\"65\" y=\"0\" key=\"new project wizard/0.0.1366.728@0.0.1366.728\" timestamp=\"1595158175253\" />\r\n    <state x=\"526\" y=\"121\" key=\"refactoring.ChangeSignatureDialog\" timestamp=\"1595277614020\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state x=\"526\" y=\"121\" key=\"refactoring.ChangeSignatureDialog/0.0.1366.728@0.0.1366.728\" timestamp=\"1595277614020\" />\r\n    <state x=\"339\" y=\"162\" key=\"run.anything.popup\" timestamp=\"1595276255281\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state x=\"339\" y=\"162\" key=\"run.anything.popup/0.0.1366.728@0.0.1366.728\" timestamp=\"1595276255281\" />\r\n    <state x=\"346\" y=\"49\" width=\"672\" height=\"678\" key=\"search.everywhere.popup\" timestamp=\"1595302193105\">\r\n      <screen x=\"0\" y=\"0\" width=\"1366\" height=\"728\" />\r\n    </state>\r\n    <state x=\"346\" y=\"49\" width=\"672\" height=\"678\" key=\"search.everywhere.popup/0.0.1366.728@0.0.1366.728\" timestamp=\"1595302193105\" />\r\n  </component>\r\n  <component name=\"com.intellij.coverage.CoverageDataManagerImpl\">\r\n    <SUITE FILE_PATH=\"coverage/Parking_Lot$ParkingLotTest.ic\" NAME=\"ParkingLotTest Coverage Results\" MODIFIED=\"1595305682216\" SOURCE_PROVIDER=\"com.intellij.coverage.DefaultCoverageFileProvider\" RUNNER=\"idea\" COVERAGE_BY_TEST_ENABLED=\"false\" COVERAGE_TRACING_ENABLED=\"false\" />\r\n  </component>\r\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- .idea/workspace.xml	(revision 5cbe51fdcfc7e7096c1cfb3490d6671baad1db71)
++++ .idea/workspace.xml	(date 1595357321699)
+@@ -12,12 +12,6 @@
+   <component name="ChangeListManager">
+     <list default="true" id="dd0e90e2-9905-4a46-9f6a-54fedee099aa" name="Default Changelist" comment="">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/observer/Owner.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/observer/Owner.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkAttendant.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkAttendant.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkingLot.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkingLot.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/build/classes/java/test/com/bridgelabz/ParkingLot/ParkingLotTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/com/bridgelabz/ParkingLot/ParkingLotTest.class" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/observer/Owner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/observer/Owner.java" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkAttendant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkAttendant.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java" afterDir="false" />
+       <change beforePath="$PROJECT_DIR$/src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java" afterDir="false" />
+     </list>
+@@ -50,6 +44,11 @@
+     </option>
+   </component>
+   <component name="Git.Settings">
++    <option name="RECENT_BRANCH_BY_REPOSITORY">
++      <map>
++        <entry key="$PROJECT_DIR$" value="development" />
++      </map>
++    </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+   </component>
+   <component name="ProjectId" id="1ep3vXSnj9DkU00OyCQNZOzQqXw" />
+@@ -211,22 +210,22 @@
+       <screen x="0" y="0" width="1366" height="728" />
+     </state>
+     <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1595180738586" />
+-    <state width="1323" height="190" key="GridCell.Tab.0.bottom" timestamp="1595305697535">
++    <state width="1323" height="190" key="GridCell.Tab.0.bottom" timestamp="1595313189698">
+       <screen x="0" y="0" width="1366" height="728" />
+     </state>
+-    <state width="1323" height="190" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1595305697535" />
+-    <state width="1323" height="190" key="GridCell.Tab.0.center" timestamp="1595305697535">
++    <state width="1323" height="190" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1595313189698" />
++    <state width="1323" height="190" key="GridCell.Tab.0.center" timestamp="1595313189697">
+       <screen x="0" y="0" width="1366" height="728" />
+     </state>
+-    <state width="1323" height="190" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1595305697535" />
+-    <state width="1323" height="190" key="GridCell.Tab.0.left" timestamp="1595305697535">
++    <state width="1323" height="190" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1595313189697" />
++    <state width="1323" height="190" key="GridCell.Tab.0.left" timestamp="1595313189694">
+       <screen x="0" y="0" width="1366" height="728" />
+     </state>
+-    <state width="1323" height="190" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1595305697535" />
+-    <state width="1323" height="190" key="GridCell.Tab.0.right" timestamp="1595305697535">
++    <state width="1323" height="190" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1595313189694" />
++    <state width="1323" height="190" key="GridCell.Tab.0.right" timestamp="1595313189697">
+       <screen x="0" y="0" width="1366" height="728" />
+     </state>
+-    <state width="1323" height="190" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1595305697535" />
++    <state width="1323" height="190" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1595313189697" />
+     <state x="498" y="142" key="chooseDestDirectoryDialog" timestamp="1595008906045">
+       <screen x="0" y="0" width="1366" height="728" />
+     </state>

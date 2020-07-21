@@ -10,17 +10,7 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="dd0e90e2-9905-4a46-9f6a-54fedee099aa" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/observer/Owner.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/observer/Owner.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkAttendant.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkAttendant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkingLot.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkingLot.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/test/com/bridgelabz/ParkingLot/ParkingLotTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/com/bridgelabz/ParkingLot/ParkingLotTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/observer/Owner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/observer/Owner.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkAttendant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkAttendant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java" afterDir="false" />
-    </list>
+    <list default="true" id="dd0e90e2-9905-4a46-9f6a-54fedee099aa" name="Default Changelist" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -50,6 +40,11 @@
     </option>
   </component>
   <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="UC_6_Parking_Attendant" />
+      </map>
+    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1ep3vXSnj9DkU00OyCQNZOzQqXw" />
@@ -249,6 +244,6 @@
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1595302193105" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Parking_Lot$ParkingLotTest.ic" NAME="ParkingLotTest Coverage Results" MODIFIED="1595305682216" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Parking_Lot$ParkingLotTest.ic" NAME="ParkingLotTest Coverage Results" MODIFIED="1595188330764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
