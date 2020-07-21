@@ -63,6 +63,15 @@ public class ParkingLot {
             notifyAllObservers(false);
       }
 
+      public int vehicleSpotInLot(String vehicelNumber) throws ParkingLotException {
+            int spot = parkingSpotMap.keySet()
+                    .stream()
+                    .filter(key -> vehicelNumber.equals(parkingSpotMap.get(key)))
+                    .findFirst().get();
+            this.unparkVehicle(vehicelNumber);
+            return spot;
+      }
+
       public void parkinLotSize(int size) {
             this.sizeOfParkingLot = size;
       }

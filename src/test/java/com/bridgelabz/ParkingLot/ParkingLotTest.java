@@ -105,4 +105,13 @@ public class ParkingLotTest {
             boolean informedOwner = parkingLot.owner.isParkingLotFull();
             Assert.assertFalse(informedOwner);
       }
+
+      @Test
+      public void givenParkedVehicle_WhenFound_ShouldReturnSpotInParkingLot() throws ParkingLotException {
+            parkingLot.parkedVehicle("GA-08-A-2323");
+            parkingLot.parkedVehicle("GJ-08-A-4567");
+            parkingLot.parkedVehicle("MH-08-A-4567");
+            int position = parkingLot.vehicleSpotInLot("MH-08-A-4567");
+            Assert.assertEquals(2, position);
+      }
 }
