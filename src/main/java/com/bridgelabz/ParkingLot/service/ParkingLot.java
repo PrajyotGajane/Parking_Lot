@@ -1,17 +1,36 @@
 package com.bridgelabz.ParkingLot.service;
 
 import com.bridgelabz.ParkingLot.exception.ParkingLotException;
+import com.bridgelabz.ParkingLot.observer.Observer;
 
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ParkingLot {
-      HashSet<String> isVehicleParked = new HashSet<>();
+      public ParkAttendant parkAttendant;
+      private List<String> isVehicleParked = new ArrayList<>();
+      private HashMap<Integer, String> parkingSpotMap = new HashMap<>();
       private int sizeOfParkingLot = 10;
-      public Owner owner = new Owner();
-      public AirportSecurity airportSecurity = new AirportSecurity();
+      public Owner owner;
+      public AirportSecurity airportSecurity;
+      List<Observer> observerList = new ArrayList<>();
+
+      public ParkingLot() {
+
+      }
 
       public boolean isVehiclePresent(String vehicleNumber) {
-            return isVehicleParked.contains(vehicleNumber);
+            return parkingSpotMap.containsValue(vehicleNumber);
+      }
+
+      public ParkingLot(Owner owner, AirportSecurity airportSecurity) {
+            this.owner = owner;
+            this.airportSecurity = airportSecurity;
+            this.parkAttendant = new ParkAttendant();
+            this.observerList.add(owner);
+            this.observerList.add(airportSecurity);
       }
 
       public void parkedVehicle(String vehicleNumber) throws ParkingLotException {
@@ -21,19 +40,30 @@ public class ParkingLot {
                   throw new ParkingLotException("Already Parked", ParkingLotException.ExceptionType.ALREADY_PARKED);
             if (isVehicleParked.size() == sizeOfParkingLot)
                   throw new ParkingLotException("Parking Lot Full", ParkingLotException.ExceptionType.PARKING_LOT_FULL);
-            isVehicleParked.add(vehicleNumber);
-            if (isVehicleParked.size() == sizeOfParkingLot) {
-                  owner.parkingLotFull(true);
-                  airportSecurity.parkingLotFull(true);
+            parkingSpotMap = parkAttendant.attendantParkedVehicle(vehicleNumber, parkingSpotMap);
+            if (parkingSpotMap.size() == sizeOfParkingLot) {
+                 notifyAllObservers(true);
+            }
+      }
+
+      public void notifyAllObservers(boolean status){
+            for (Observer observer : observerList){
+                  observer.parkingLotFull(status);
             }
       }
 
       public void unparkVehicle(String vehicleNumber) throws ParkingLotException {
-            if (!isVehicleParked.contains(vehicleNumber))
+            Integer key = null;
+            if (!parkingSpotMap.containsValue(vehicleNumber))
                   throw new ParkingLotException("Vehicle not present in lot",
                           ParkingLotException.ExceptionType.VEHICLE_NOT_PRESENT);
-            isVehicleParked.remove(vehicleNumber);
-            owner.parkingLotFull(false);
+            for (Map.Entry<Integer, String> entry : parkingSpotMap.entrySet()) {
+                  if (entry.getValue().equals(vehicleNumber)) {
+                        key = entry.getKey();
+                  }
+            }
+            parkingSpotMap.put(key, null);
+            notifyAllObservers(false);
       }
 
       public void parkinLotSize(int size) {

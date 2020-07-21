@@ -1,6 +1,9 @@
 package com.bridgelabz.ParkingLot;
 
 import com.bridgelabz.ParkingLot.exception.ParkingLotException;
+import com.bridgelabz.ParkingLot.service.AirportSecurity;
+import com.bridgelabz.ParkingLot.service.Owner;
+import com.bridgelabz.ParkingLot.service.ParkAttendant;
 import com.bridgelabz.ParkingLot.service.ParkingLot;
 import org.junit.Assert;
 import org.junit.Before;
@@ -11,7 +14,7 @@ public class ParkingLotTest {
 
       @Before
       public void setUp() {
-            parkingLot = new ParkingLot();
+            parkingLot = new ParkingLot(new Owner(), new AirportSecurity());
       }
 
       @Test
@@ -32,7 +35,6 @@ public class ParkingLotTest {
 
       @Test
       public void givenVehicle_WhenAlreadyParked_ShouldThrowCustomException() {
-            ParkingLot parkingLot = new ParkingLot();
             try {
                   parkingLot.parkedVehicle("GA-08-A-2323");
                   parkingLot.parkedVehicle("GA-08-A-2323");
@@ -94,12 +96,15 @@ public class ParkingLotTest {
 
       @Test
       public void givenParkingLotWithSize_WhenSpaceAvailableInformOwner_ShouldInformOwnerAndReturnTrue() throws ParkingLotException {
-            parkingLot.parkinLotSize(2);
+            parkingLot.parkinLotSize(10);
             parkingLot.parkedVehicle("GA-08-A-2323");
             parkingLot.parkedVehicle("GJ-08-A-4567");
             parkingLot.unparkVehicle("GJ-08-A-4567");
-            boolean informedOwner = parkingLot.owner.isParkingLotFull();
-            Assert.assertFalse(informedOwner);
+            parkingLot.parkedVehicle("MH-08-A-4567");
+            parkingLot.parkedVehicle("TN-08-A-4567");
+            parkingLot.parkedVehicle("KL-08-A-4567");
+//            boolean informedOwner = parkingLot.owner.isParkingLotFull();
+//            Assert.assertFalse(informedOwner);
       }
 
 }
