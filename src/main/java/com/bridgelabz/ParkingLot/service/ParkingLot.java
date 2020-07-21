@@ -30,14 +30,14 @@ public class ParkingLot {
             this.observerList.add(airportSecurity);
       }
 
-      public void parkedVehicle(String vehicleNumber) throws ParkingLotException {
+      public void parkedVehicle(int spot, String vehicleNumber) throws ParkingLotException {
             if (vehicleNumber == null)
                   throw new ParkingLotException("Invalid Vehicle", ParkingLotException.ExceptionType.INVALID_VEHICLE);
             if (parkingSpotMap.containsValue(vehicleNumber))
                   throw new ParkingLotException("Already Parked", ParkingLotException.ExceptionType.ALREADY_PARKED);
             if (parkingSpotMap.size() == sizeOfParkingLot)
                   throw new ParkingLotException("Parking Lot Full", ParkingLotException.ExceptionType.PARKING_LOT_FULL);
-            parkingSpotMap = parkAttendant.attendantParkedVehicle(vehicleNumber, parkingSpotMap);
+            parkingSpotMap = parkAttendant.attendantParkedVehicle(spot, vehicleNumber, parkingSpotMap);
             if (parkingSpotMap.size() == sizeOfParkingLot) {
                   notifyAllObservers(true);
             }

@@ -12,6 +12,14 @@
   <component name="ChangeListManager">
     <list default="true" id="dd0e90e2-9905-4a46-9f6a-54fedee099aa" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/observer/Owner.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/observer/Owner.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkAttendant.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkAttendant.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkingLot.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/main/com/bridgelabz/ParkingLot/service/ParkingLot.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/classes/java/test/com/bridgelabz/ParkingLot/ParkingLotTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/build/classes/java/test/com/bridgelabz/ParkingLot/ParkingLotTest.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/observer/Owner.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/observer/Owner.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkAttendant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkAttendant.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/bridgelabz/ParkingLot/service/ParkingLot.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/com/bridgelabz/ParkingLot/ParkingLotTest.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -59,13 +67,32 @@
       <recent name="com.bridgelabz.ParkingLot" />
     </key>
   </component>
-  <component name="RunManager" selected="Gradle.ParkingLotTest.givenParkedVehicle_WhenFound_ShouldReturnSpotInParkingLot">
+  <component name="RunManager" selected="Gradle.ParkingLotTest">
     <configuration name="ParkingLotTest" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
         <option name="scriptParameters" value="--tests &quot;com.bridgelabz.ParkingLot.ParkingLotTest&quot;" />
+        <option name="taskDescriptions">
+          <list />
+        </option>
+        <option name="taskNames">
+          <list>
+            <option value=":test" />
+          </list>
+        </option>
+        <option name="vmOptions" />
+      </ExternalSystemSettings>
+      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
+      <method v="2" />
+    </configuration>
+    <configuration name="ParkingLotTest.givenCarDetailsToParkingAttendant_WhenParkedAsPerProvidedSlot_ShouldReturnTrue" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+      <ExternalSystemSettings>
+        <option name="executionName" />
+        <option name="externalProjectPath" value="$PROJECT_DIR$" />
+        <option name="externalSystemIdString" value="GRADLE" />
+        <option name="scriptParameters" value="--tests &quot;com.bridgelabz.ParkingLot.ParkingLotTest.givenCarDetailsToParkingAttendant_WhenParkedAsPerProvidedSlot_ShouldReturnTrue&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -98,25 +125,6 @@
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParkingLotTest.givenParkingLotWithSize_WhenFullInformOwner_ShouldInformOwnerAndReturnTrue" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
-      <ExternalSystemSettings>
-        <option name="executionName" />
-        <option name="externalProjectPath" value="$PROJECT_DIR$" />
-        <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;com.bridgelabz.ParkingLot.ParkingLotTest.givenParkingLotWithSize_WhenFullInformOwner_ShouldInformOwnerAndReturnTrue&quot;" />
-        <option name="taskDescriptions">
-          <list />
-        </option>
-        <option name="taskNames">
-          <list>
-            <option value=":test" />
-          </list>
-        </option>
-        <option name="vmOptions" />
-      </ExternalSystemSettings>
-      <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
-      <method v="2" />
-    </configuration>
     <configuration name="ParkingLotTest.givenParkingLotWithSize_WhenSpaceAvailableInformOwner_ShouldInformOwnerAndReturnTrue" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
@@ -136,12 +144,12 @@
       <GradleScriptDebugEnabled>false</GradleScriptDebugEnabled>
       <method v="2" />
     </configuration>
-    <configuration name="ParkingLotTest.givenVehicle_WhenUnparked_ShouldReturnTrue" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
+    <configuration name="ParkingLotTest.givenVehicle_WhenAlreadyParked_ShouldThrowCustomException" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
         <option name="executionName" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="externalSystemIdString" value="GRADLE" />
-        <option name="scriptParameters" value="--tests &quot;com.bridgelabz.ParkingLot.ParkingLotTest.givenVehicle_WhenUnparked_ShouldReturnTrue&quot;" />
+        <option name="scriptParameters" value="--tests &quot;com.bridgelabz.ParkingLot.ParkingLotTest.givenVehicle_WhenAlreadyParked_ShouldThrowCustomException&quot;" />
         <option name="taskDescriptions">
           <list />
         </option>
@@ -157,11 +165,11 @@
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Gradle.ParkingLotTest.givenParkedVehicle_WhenFound_ShouldReturnSpotInParkingLot" />
         <item itemvalue="Gradle.ParkingLotTest" />
+        <item itemvalue="Gradle.ParkingLotTest.givenVehicle_WhenAlreadyParked_ShouldThrowCustomException" />
         <item itemvalue="Gradle.ParkingLotTest.givenParkingLotWithSize_WhenSpaceAvailableInformOwner_ShouldInformOwnerAndReturnTrue" />
-        <item itemvalue="Gradle.ParkingLotTest.givenVehicle_WhenUnparked_ShouldReturnTrue" />
-        <item itemvalue="Gradle.ParkingLotTest.givenParkingLotWithSize_WhenFullInformOwner_ShouldInformOwnerAndReturnTrue" />
+        <item itemvalue="Gradle.ParkingLotTest.givenParkedVehicle_WhenFound_ShouldReturnSpotInParkingLot" />
+        <item itemvalue="Gradle.ParkingLotTest.givenCarDetailsToParkingAttendant_WhenParkedAsPerProvidedSlot_ShouldReturnTrue" />
       </list>
     </recent_temporary>
   </component>
@@ -203,22 +211,22 @@
       <screen x="0" y="0" width="1366" height="728" />
     </state>
     <state x="413" y="111" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.1366.728@0.0.1366.728" timestamp="1595180738586" />
-    <state width="1323" height="190" key="GridCell.Tab.0.bottom" timestamp="1595301188547">
+    <state width="1323" height="190" key="GridCell.Tab.0.bottom" timestamp="1595305697535">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1595301188547" />
-    <state width="1323" height="190" key="GridCell.Tab.0.center" timestamp="1595301188546">
+    <state width="1323" height="190" key="GridCell.Tab.0.bottom/0.0.1366.728@0.0.1366.728" timestamp="1595305697535" />
+    <state width="1323" height="190" key="GridCell.Tab.0.center" timestamp="1595305697535">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1595301188546" />
-    <state width="1323" height="190" key="GridCell.Tab.0.left" timestamp="1595301188546">
+    <state width="1323" height="190" key="GridCell.Tab.0.center/0.0.1366.728@0.0.1366.728" timestamp="1595305697535" />
+    <state width="1323" height="190" key="GridCell.Tab.0.left" timestamp="1595305697535">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1595301188546" />
-    <state width="1323" height="190" key="GridCell.Tab.0.right" timestamp="1595301188546">
+    <state width="1323" height="190" key="GridCell.Tab.0.left/0.0.1366.728@0.0.1366.728" timestamp="1595305697535" />
+    <state width="1323" height="190" key="GridCell.Tab.0.right" timestamp="1595305697535">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
-    <state width="1323" height="190" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1595301188546" />
+    <state width="1323" height="190" key="GridCell.Tab.0.right/0.0.1366.728@0.0.1366.728" timestamp="1595305697535" />
     <state x="498" y="142" key="chooseDestDirectoryDialog" timestamp="1595008906045">
       <screen x="0" y="0" width="1366" height="728" />
     </state>
@@ -241,6 +249,6 @@
     <state x="346" y="49" width="672" height="678" key="search.everywhere.popup/0.0.1366.728@0.0.1366.728" timestamp="1595302193105" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/Parking_Lot$ParkingLotTest.ic" NAME="ParkingLotTest Coverage Results" MODIFIED="1595188330764" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/Parking_Lot$ParkingLotTest.ic" NAME="ParkingLotTest Coverage Results" MODIFIED="1595305682216" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
 </project>
