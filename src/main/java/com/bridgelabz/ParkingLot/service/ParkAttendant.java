@@ -1,5 +1,7 @@
 package com.bridgelabz.ParkingLot.service;
 
+import com.bridgelabz.ParkingLot.observer.Owner;
+
 import java.util.HashMap;
 
 public class ParkAttendant {

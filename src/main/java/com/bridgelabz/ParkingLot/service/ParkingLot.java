@@ -1,7 +1,9 @@
 package com.bridgelabz.ParkingLot.service;
 
 import com.bridgelabz.ParkingLot.exception.ParkingLotException;
+import com.bridgelabz.ParkingLot.observer.AirportSecurity;
 import com.bridgelabz.ParkingLot.observer.Observer;
+import com.bridgelabz.ParkingLot.observer.Owner;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -16,10 +18,6 @@ public class ParkingLot {
       public Owner owner;
       public AirportSecurity airportSecurity;
       List<Observer> observerList = new ArrayList<>();
-
-      public ParkingLot() {
-
-      }
 
       public boolean isVehiclePresent(String vehicleNumber) {
             return parkingSpotMap.containsValue(vehicleNumber);

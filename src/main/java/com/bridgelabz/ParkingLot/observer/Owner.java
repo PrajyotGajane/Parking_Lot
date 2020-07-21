@@ -1,4 +1,4 @@
-package com.bridgelabz.ParkingLot.service;
+package com.bridgelabz.ParkingLot.observer;
 
 import com.bridgelabz.ParkingLot.observer.Observer;
 

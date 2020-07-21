@@ -1,9 +1,8 @@
 package com.bridgelabz.ParkingLot;
 
 import com.bridgelabz.ParkingLot.exception.ParkingLotException;
-import com.bridgelabz.ParkingLot.service.AirportSecurity;
-import com.bridgelabz.ParkingLot.service.Owner;
-import com.bridgelabz.ParkingLot.service.ParkAttendant;
+import com.bridgelabz.ParkingLot.observer.AirportSecurity;
+import com.bridgelabz.ParkingLot.observer.Owner;
 import com.bridgelabz.ParkingLot.service.ParkingLot;
 import org.junit.Assert;
 import org.junit.Before;
@@ -103,8 +102,8 @@ public class ParkingLotTest {
             parkingLot.parkedVehicle("MH-08-A-4567");
             parkingLot.parkedVehicle("TN-08-A-4567");
             parkingLot.parkedVehicle("KL-08-A-4567");
-//            boolean informedOwner = parkingLot.owner.isParkingLotFull();
-//            Assert.assertFalse(informedOwner);
+            boolean informedOwner = parkingLot.owner.isParkingLotFull();
+            Assert.assertFalse(informedOwner);
       }
 
 }
