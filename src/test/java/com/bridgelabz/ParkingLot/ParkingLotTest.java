@@ -105,5 +105,4 @@ public class ParkingLotTest {
             boolean informedOwner = parkingLot.owner.isParkingLotFull();
             Assert.assertFalse(informedOwner);
       }
-
 }

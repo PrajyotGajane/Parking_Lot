@@ -12,7 +12,6 @@ import java.util.Map;
 
 public class ParkingLot {
       public ParkAttendant parkAttendant;
-      private List<String> isVehicleParked = new ArrayList<>();
       private HashMap<Integer, String> parkingSpotMap = new HashMap<>();
       private int sizeOfParkingLot = 10;
       public Owner owner;
@@ -34,18 +33,18 @@ public class ParkingLot {
       public void parkedVehicle(String vehicleNumber) throws ParkingLotException {
             if (vehicleNumber == null)
                   throw new ParkingLotException("Invalid Vehicle", ParkingLotException.ExceptionType.INVALID_VEHICLE);
-            if (isVehicleParked.contains(vehicleNumber))
+            if (parkingSpotMap.containsValue(vehicleNumber))
                   throw new ParkingLotException("Already Parked", ParkingLotException.ExceptionType.ALREADY_PARKED);
-            if (isVehicleParked.size() == sizeOfParkingLot)
+            if (parkingSpotMap.size() == sizeOfParkingLot)
                   throw new ParkingLotException("Parking Lot Full", ParkingLotException.ExceptionType.PARKING_LOT_FULL);
             parkingSpotMap = parkAttendant.attendantParkedVehicle(vehicleNumber, parkingSpotMap);
             if (parkingSpotMap.size() == sizeOfParkingLot) {
-                 notifyAllObservers(true);
+                  notifyAllObservers(true);
             }
       }
 
-      public void notifyAllObservers(boolean status){
-            for (Observer observer : observerList){
+      public void notifyAllObservers(boolean status) {
+            for (Observer observer : observerList) {
                   observer.parkingLotFull(status);
             }
       }

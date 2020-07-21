@@ -1,7 +1,5 @@
 package com.bridgelabz.ParkingLot.observer;
 
-import com.bridgelabz.ParkingLot.observer.Observer;
-
 import java.util.HashMap;
 
 public class Owner implements Observer {
